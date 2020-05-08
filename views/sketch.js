@@ -8,18 +8,21 @@ var cardWidth;
 var cardHeight;
 var playSpaces;
 var socket = io();
-
+var userData;
 function setup() {
-	socket.on('404-error', () => {
-		window.location.href = '/';
+	socket.on("404-error", () => {
+		window.location.href = "/";
 	});
-
 	state = {};
 
-	let userData = JSON.parse(localStorage.getItem('game_data'));
-	socket.emit('joinGame', userData);
+	userData = JSON.parse(localStorage.getItem("game_data"));
+	socket.emit("joinGame", userData);
 
-	socket.on('gameJoined', (data) => {
+	socket.on("exitGame", () => {
+		window.location.href = "/";
+	});
+
+	socket.on("gameJoined", (data) => {
 		let dataUsers = JSON.parse(data.users);
 		let dataCards = JSON.parse(data.deck);
 		let dataState = JSON.parse(data.state);
@@ -91,7 +94,7 @@ function setup() {
 				id: index,
 				name: user,
 				card: null,
-				selected: dataState != null ? dataState.players[index].selected : '',
+				selected: dataState != null ? dataState.players[index].selected : "",
 			});
 		});
 		state.players.forEach((player, index) => {
@@ -107,14 +110,14 @@ function setup() {
 				dataState.players[dataUsers.indexOf(userData.userName)].selected;
 		}
 		if (localPlayer.host && dataState == null) {
-			console.log('host send state');
+			console.log("host send state");
 			sendState();
 		}
 		if (localPlayer.seat != null && dataState != null) {
 			sendState();
 		}
 		// socket.on("updateState", (data) => (state = data));
-		socket.on('newState', (data) => {
+		socket.on("newState", (data) => {
 			state.players = data.players;
 			state.deck.forEach((card, index) => {
 				card.pos.x = data.deck[index].posX;
@@ -126,14 +129,14 @@ function setup() {
 			state.game = data.game;
 		});
 		if (localPlayer.host) {
-			this.continue = createButton('Start Day');
+			this.continue = createButton("Start Day");
 			this.continue.size(150, 60);
 			this.continue.position(width - 200, 30);
 			this.continue.mouseClicked(() => {
 				state.game.night = false;
 				state.deck.forEach((card) => {
 					card.menu.removeButtons();
-					this.vote = createButton('VOTE!');
+					this.vote = createButton("VOTE!");
 					this.vote.size(150, 60);
 					this.vote.position(width - 200, 30);
 					this.vote.mouseClicked(() => {
@@ -214,13 +217,18 @@ function sendState() {
 		minDeck.push(newCard);
 	});
 	state.players[localPlayer.seat].selected = localPlayer.selected;
-	console.log('selected', localPlayer.selected);
-	console.log('state selected', state.players[localPlayer.seat].selected);
+	console.log("selected", localPlayer.selected);
+	console.log("state selected", state.players[localPlayer.seat].selected);
 	minState = {
 		roomCode: state.roomCode,
 		players: state.players,
 		deck: minDeck,
 		game: state.game,
 	};
-	socket.emit('updateState', minState);
+	socket.emit("updateState", minState);
 }
+
+endGame = () => {
+	console.log("end game");
+	socket.emit("endGame", userData.roomCode);
+};
