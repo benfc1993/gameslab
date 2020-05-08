@@ -36,6 +36,11 @@ app.use(express.static('./client'));
 
 io.sockets.on('connection', newConnection);
 
+process.on('unhandledRejection', (error) => {
+	// Will print "unhandledRejection err is not defined"
+	console.log('unhandledRejection', error.message);
+});
+
 function newConnection(socket) {
 	console.log('socket connected !!!!!!');
 	socket.on('createRoom', (data) => {
@@ -47,12 +52,12 @@ function newConnection(socket) {
 				if (!found) {
 					Games.createGame(data, (res) => {
 						socket.emit('roomCreated', res);
-					});
+					}).catch();
 				} else {
 					msg.push('room already exists');
 					socket.emit('error-message', msg);
 				}
-			});
+			}).catch();
 		} else {
 			if (data.userName.length <= 0) {
 				msg.push('please enter a Username');
@@ -74,7 +79,7 @@ function newConnection(socket) {
 			} else {
 				socket.emit('error-message', ['Room not found']);
 			}
-		});
+		}).catch();
 	});
 	socket.on('joinLobby', (data) => {
 		socket.userName = data.userName;
@@ -91,7 +96,7 @@ function newConnection(socket) {
 			} else {
 				socket.emit('404-error');
 			}
-		});
+		}).catch();
 	});
 	socket.on('deckChange', (deck) => {
 		socket.broadcast.emit('newDeck', deck);
@@ -99,7 +104,7 @@ function newConnection(socket) {
 	socket.on('startGame', (data) => {
 		Games.updateDeckByCode(data, (res) => {
 			io.emit('loadGame');
-		});
+		}).catch();
 	});
 	socket.on('joinGame', (data) => {
 		socket.userName = data.userName;
@@ -110,24 +115,24 @@ function newConnection(socket) {
 				if (users.indexOf(data.userName) == -1) {
 					users.push(data.userName);
 					data.userName = users;
-					Games.updateByCode(data, (res) => {});
+					Games.updateByCode(data, (res) => {}).catch();
 				}
 				socket.emit('gameJoined', res);
 			} else {
 				socket.emit('404-error');
 			}
-		});
+		}).catch();
 	});
 
 	socket.on('updateState', (data) => {
 		Games.updateGameState(data, (res) => {
 			io.emit('newState', data);
-		});
+		}).catch();
 	});
 	socket.on('endGame', (roomCode) => {
 		Games.remove(roomCode, (res) => {
 			io.emit('exitGame');
-		});
+		}).catch();
 	});
 	socket.on('disconnect', () => {
 		let data = {
@@ -141,10 +146,10 @@ function newConnection(socket) {
 				if (users.indexOf(data.userName) > -1) {
 					users.splice(users.indexOf(data.userName), 1);
 					data.userName = users;
-					Games.updateByCode(data, (res) => {});
+					Games.updateByCode(data, (res) => {}).catch();
 				}
 				io.emit('updateLobby', users);
 			}
-		});
+		}).catch();
 	});
 }

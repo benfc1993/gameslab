@@ -1,14 +1,16 @@
-var socket = io('https://bensgames.herokuapp.com');
+var socket = io();
 
 const roomCode = document.getElementById('room-code');
 const userName = document.getElementById('username');
 const errorMessage = document.getElementById('error-message');
 
 createRoom = () => {
+	console.log('click create room');
 	let data = {
 		roomCode: roomCode.value,
 		userName: userName.value,
 	};
+	console.log(data);
 	socket.emit('createRoom', data);
 };
 

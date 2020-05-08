@@ -38,8 +38,10 @@ Game.getGameByCode = function (data, result) {
 	) {
 		if (err) {
 			console.log('get by code error: ', err);
+			console.log(data);
 			result(false);
 		} else {
+			console.log(res.rows);
 			result(res.rows[0]);
 		}
 	});
@@ -47,6 +49,9 @@ Game.getGameByCode = function (data, result) {
 
 Game.getAllGames = function (result) {
 	sql.query('Select * from games', function (err, res) {
+		query.on('error', function (err) {
+			console.log('Query error: ' + err);
+		});
 		if (err) {
 			console.log('error: ', err);
 			result(err);
