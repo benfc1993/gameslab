@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<h1 id="lobby-title"></h1>
+		<div id="users-list"></div>
+		<button onclick="startGame()">Start Game</button>
+		<div class="deck-builder">
+			<div class="card-field" data-type="Werewolf">
+				<label for="Werewolf">Werewolf</label>
+				<input type="number" name="Werewolf" class="card-field__qty" />
+			</div>
+			<div class="card-field" data-type="Villager">
+				<label for="Villager">Villager</label>
+				<input type="number" name="Villager" class="card-field__qty" />
+			</div>
+			<div class="card-field" data-type="Seer">
+				<label for="Seer">Seer</label>
+				<input type="number" name="Seer" class="card-field__qty" />
+			</div>
+			<div class="card-field" data-type="Robber">
+				<label for="Robber">Robber</label>
+				<input type="number" name="Robber" class="card-field__qty" />
+			</div>
+			<div class="card-field" data-type="Trickster">
+				<label for="Trickster">Trickster</label>
+				<input type="number" name="Trickster" class="card-field__qty" />
+			</div>
+			<div class="card-field" data-type="Minion">
+				<label for="Minion">Minion</label>
+				<input type="number" name="Minion" class="card-field__qty" />
+			</div>
+			<div class="card-field" data-type="Tanner">
+				<label for="Tanner">Tanner</label>
+				<input type="number" name="Tanner" class="card-field__qty" />
+			</div>
+			<div class="card-field" data-type="Drunk">
+				<label for="Drunk">Drunk</label>
+				<input type="number" name="Drunk" class="card-field__qty" />
+			</div>
+			<div class="card-field" data-type="Insomniac">
+				<label for="Insomniac">Insomniac</label>
+				<input type="number" name="Insomniac" class="card-field__qty" />
+			</div>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+		<script src="lobby.js"></script>
+	</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="style.css" type="text/css" />
+	</head>
+	<body>
+		<div class="d-flex">
+			<label for="roomcode">Room Code</label>
+			<input id="room-code" name="roomcode" />
+			<label for="username">Username</label>
+			<input id="username" name="username" />
+			<input
+				type="submit"
+				value="Create"
+				onclick="createRoom();return false;"
+			/>
+			<input type="submit" value="Join" onclick="joinRoom();return false;" />
+			<p id="error-message" class="hide"></p>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+		<script src="./login.js"></script>
+	</body>
+</html>
