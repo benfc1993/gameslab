@@ -1,4 +1,4 @@
-var socket = io();
+var socket = io('https://bensgames.herokuapp.com');
 
 socket.on('404-error', () => {
 	window.location.href = '/';
