@@ -1,4 +1,4 @@
-var socket = io('https://bensgames.herokuapp.com');
+var socket = io(window.location.origin);
 
 const roomCode = document.getElementById('room-code');
 const userName = document.getElementById('username');

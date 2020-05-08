@@ -7,7 +7,7 @@ var space;
 var cardWidth;
 var cardHeight;
 var playSpaces;
-var socket = io('https://bensgames.herokuapp.com');
+var socket = io(window.location.origin);
 var userData;
 function setup() {
 	socket.on('404-error', () => {
