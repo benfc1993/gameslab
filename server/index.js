@@ -6,7 +6,14 @@ var app = express();
 var server = app.listen(process.env.PORT, listening);
 var socket = require("socket.io");
 var io = socket(server);
-var sql = require("./db.js");
+// var sql = require("./db.js");
+
+const { Client } = require('pg');
+
+const sql = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
 app.set("view engine", "ejs");
 sql.connect();
 
