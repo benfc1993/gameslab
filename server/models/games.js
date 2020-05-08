@@ -7,7 +7,7 @@ var Game = function (game) {
 };
 Game.createGame = function (data, result) {
 	sql.query(
-		'INSERT INTO public.games set room_code = ?, users = ?, lobby = 1',
+		'INSERT INTO games set room_code = ?, users = ?, lobby = 1',
 		[data.roomCode, JSON.stringify([data.userName])],
 		function (err, res) {
 			if (err) {
@@ -21,7 +21,7 @@ Game.createGame = function (data, result) {
 };
 
 Game.getGameById = function (id, result) {
-	sql.query('Select * from public.games where id = ?', id, function (err, res) {
+	sql.query('Select * from games where id = ?', id, function (err, res) {
 		if (err) {
 			console.log('error: ', err);
 			result(err, null);
@@ -32,7 +32,7 @@ Game.getGameById = function (id, result) {
 };
 
 Game.getGameByCode = function (data, result) {
-	sql.query('Select * from public.games where room_code = ?', data, function (
+	sql.query('Select * from games where room_code = ?', data, function (
 		err,
 		res
 	) {
@@ -46,7 +46,7 @@ Game.getGameByCode = function (data, result) {
 };
 
 Game.getAllGames = function (result) {
-	sql.query('Select * from public.games', function (err, res) {
+	sql.query('Select * from games', function (err, res) {
 		if (err) {
 			console.log('error: ', err);
 			result(err);
@@ -57,7 +57,7 @@ Game.getAllGames = function (result) {
 };
 Game.updateByCode = function (data, result) {
 	sql.query(
-		'UPDATE public.games SET users = ? WHERE room_code = ?',
+		'UPDATE games SET users = ? WHERE room_code = ?',
 		[JSON.stringify(data.userName), data.roomCode],
 		function (err, res) {
 			if (err) {
@@ -72,7 +72,7 @@ Game.updateByCode = function (data, result) {
 
 Game.updateGameState = function (data, result) {
 	sql.query(
-		'UPDATE public.games SET state = ? WHERE room_code = ?',
+		'UPDATE games SET state = ? WHERE room_code = ?',
 		[JSON.stringify(data), data.roomCode],
 		function (err, res) {
 			if (err) {
@@ -86,7 +86,7 @@ Game.updateGameState = function (data, result) {
 };
 Game.updateDeckByCode = function (data, result) {
 	sql.query(
-		'UPDATE public.games SET deck = ?, lobby = 0 WHERE room_code = ?',
+		'UPDATE games SET deck = ?, lobby = 0 WHERE room_code = ?',
 		[JSON.stringify(data.deck), data.roomCode],
 		function (err, res) {
 			if (err) {
@@ -99,7 +99,7 @@ Game.updateDeckByCode = function (data, result) {
 	);
 };
 Game.remove = function (id, result) {
-	sql.query('DELETE FROM public.games WHERE id = ?', [id], function (err, res) {
+	sql.query('DELETE FROM games WHERE id = ?', [id], function (err, res) {
 		if (err) {
 			console.log('error: ', err);
 			result(err);
