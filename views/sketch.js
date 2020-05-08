@@ -52,6 +52,7 @@ function setup() {
 				swapStart: null,
 				swapEnd: null,
 				night: true,
+				vote: false,
 				started: 1,
 			},
 		};
@@ -134,13 +135,23 @@ function setup() {
 			this.continue.position(width - 200, 30);
 			this.continue.mouseClicked(() => {
 				state.game.night = false;
+				sendState();
 				state.deck.forEach((card) => {
 					card.menu.removeButtons();
 					this.vote = createButton("VOTE!");
 					this.vote.size(150, 60);
 					this.vote.position(width - 200, 30);
 					this.vote.mouseClicked(() => {
-						state.game.night = true;
+						state.game.vote = true;
+						this.endGame = createButton("End Game!");
+						this.endGame.size(150, 60);
+						this.endGame.position(width - 200, 30);
+						sendState();
+						this.endGame.mouseClicked(() => {
+							console.log("end game");
+							socket.emit("endGame", userData.roomCode);
+							sendState();
+						});
 					});
 				});
 			});
@@ -154,15 +165,18 @@ function draw() {
 		if (localPlayer.host) {
 			if (state.game.night) {
 				this.continue;
-			} else {
+			} else if (!state.game.vote) {
 				this.continue.remove();
 				this.vote;
+			} else {
+				this.vote.remove();
+				this.endgame;
 			}
 		}
 		state.deck.forEach((card) => {
 			card.update();
 			card.show();
-			if (card.menu.display && state.game.night) {
+			if (card.menu.display && (state.game.night || state.game.vote)) {
 				card.menu.show();
 			}
 		});
@@ -199,9 +213,7 @@ function swapCards() {
 	state.game.swap = false;
 	state.game.swapStart = null;
 	state.game.swapEnd = null;
-	push();
 	sendState();
-	pop();
 }
 
 function sendState() {
@@ -227,8 +239,3 @@ function sendState() {
 	};
 	socket.emit("updateState", minState);
 }
-
-endGame = () => {
-	console.log("end game");
-	socket.emit("endGame", userData.roomCode);
-};
