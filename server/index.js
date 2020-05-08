@@ -4,8 +4,8 @@ require('dotenv').config();
 var express = require('express');
 var app = express();
 var server = app.listen(process.env.PORT, listening);
-// var socket = require('socket.io');
-var io = socketIO(server);
+var socket = require('socket.io');
+var io = socket(server);
 var sql = require('./db.js');
 
 sql.connect();
