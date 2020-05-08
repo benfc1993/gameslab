@@ -1,84 +1,84 @@
-console.log("server is starting");
+console.log('server is starting');
 
-require("dotenv").config();
-var express = require("express");
+require('dotenv').config();
+var express = require('express');
 var app = express();
-var server = app.listen(process.env.PORT, listening);
-var socket = require("socket.io");
+var server = app.listen(3000, listening);
+var socket = require('socket.io');
 var io = socket(server);
 // var sql = require("./db.js");
 
 const { Client } = require('pg');
 
 const sql = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
+	connectionString: process.env.DATABASE_URL,
+	ssl: true,
 });
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
 sql.connect();
 
-app.use(express.static("./views"));
-app.get("/", (req, res) => {
-	console.log("woop");
-	res.render("index");
+app.use(express.static('./views'));
+app.get('/', (req, res) => {
+	console.log('woop');
+	res.render('index');
 });
 
-app.get("/lobby", (req, res) => {
-	res.render("lobby");
+app.get('/lobby', (req, res) => {
+	res.render('lobby');
 });
 
-app.get("/game", (req, res) => {
-	res.render("game");
+app.get('/game', (req, res) => {
+	res.render('game');
 });
 
-var Games = require("./models/games.js");
+var Games = require('./models/games.js');
 
 var connectCounter = 0;
 function listening() {
-	console.log("listening port:" + process.env.PORT);
+	console.log('listening port:' + '3000');
 }
 
-app.use(express.static("./client"));
+app.use(express.static('./client'));
 
-io.sockets.on("connection", newConnection);
+io.sockets.on('connection', newConnection);
 
 function newConnection(socket) {
-	socket.on("createRoom", (data) => {
+	socket.on('createRoom', (data) => {
 		let msg = [];
 		if (data.roomCode.length == 4 && data.userName.length > 0) {
 			Games.getGameByCode(data.roomCode, (found) => {
 				if (!found) {
-					console.log("create room");
+					console.log('create room');
 					Games.createGame(data, (res) => {
-						socket.emit("roomCreated", res);
+						socket.emit('roomCreated', res);
 					});
 				} else {
-					msg.push("room already exists");
-					socket.emit("error-message", msg);
+					msg.push('room already exists');
+					socket.emit('error-message', msg);
 				}
 			});
 		} else {
 			if (data.userName.length <= 0) {
-				msg.push("please enter a Username");
+				msg.push('please enter a Username');
 			}
 			if (data.roomCode.length != 4) {
-				msg.push("Room code must be 4 characters long");
+				msg.push('Room code must be 4 characters long');
 			}
-			socket.emit("error-message", msg);
+			socket.emit('error-message', msg);
 		}
 	});
-	socket.on("findRoom", (data) => {
+	socket.on('findRoom', (data) => {
 		Games.getGameByCode(data.roomCode, (res) => {
 			if (res) {
 				socket.userName = data.userName;
 				socket.roomCode = data.roomCode;
-				socket.emit("roomFound", res);
+				socket.emit('roomFound', res);
 			} else {
-				socket.emit("error", "Room not found");
+				socket.emit('error', 'Room not found');
 			}
 		});
 	});
-	socket.on("joinLobby", (data) => {
+	socket.on('joinLobby', (data) => {
 		socket.userName = data.userName;
 		socket.roomCode = data.roomCode;
 		Games.getGameByCode(data.roomCode, (res) => {
@@ -89,19 +89,19 @@ function newConnection(socket) {
 					data.userName = users;
 					Games.updateByCode(data, (res) => {});
 				}
-				io.emit("updateLobby", users);
+				io.emit('updateLobby', users);
 			} else {
-				socket.emit("404-error");
+				socket.emit('404-error');
 			}
 		});
 	});
 
-	socket.on("startGame", (data) => {
+	socket.on('startGame', (data) => {
 		Games.updateDeckByCode(data, (res) => {
-			io.emit("loadGame");
+			io.emit('loadGame');
 		});
 	});
-	socket.on("joinGame", (data) => {
+	socket.on('joinGame', (data) => {
 		socket.userName = data.userName;
 		socket.roomCode = data.roomCode;
 		Games.getGameByCode(data.roomCode, (res) => {
@@ -112,19 +112,19 @@ function newConnection(socket) {
 					data.userName = users;
 					Games.updateByCode(data, (res) => {});
 				}
-				socket.emit("gameJoined", res);
+				socket.emit('gameJoined', res);
 			} else {
-				socket.emit("404-error");
+				socket.emit('404-error');
 			}
 		});
 	});
 
-	socket.on("updateState", (data) => {
+	socket.on('updateState', (data) => {
 		Games.updateGameState(data, (res) => {
-			io.emit("newState", data);
+			io.emit('newState', data);
 		});
 	});
-	socket.on("disconnect", () => {
+	socket.on('disconnect', () => {
 		let data = {
 			userName: socket.userName,
 			roomCode: socket.roomCode,
@@ -138,7 +138,7 @@ function newConnection(socket) {
 					data.userName = users;
 					Games.updateByCode(data, (res) => {});
 				}
-				io.emit("updateLobby", users);
+				io.emit('updateLobby', users);
 			}
 		});
 	});
