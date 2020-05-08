@@ -1,5 +1,5 @@
-"user strict";
-var sql = require("../db.js");
+'user strict';
+var sql = require('../db.js');
 
 //Game object constructor
 var Game = function (game) {
@@ -7,65 +7,64 @@ var Game = function (game) {
 };
 Game.createGame = function (data, result) {
 	sql.query(
-		"INSERT INTO games set room_code = ?, users = ?, lobby = 1",
+		'INSERT INTO games(room_code, users, lobby) values($1, $2, 1)',
 		[data.roomCode, JSON.stringify([data.userName])],
 		function (err, res) {
 			if (err) {
-				console.log("error: ", err);
+				console.log('create error: ', err);
 				result(err);
 			} else {
-				result(res);
+				result(res.rows[0]);
 			}
 		}
 	);
 };
 
 Game.getGameById = function (id, result) {
-	sql.query("Select * from games where id = ?", id, function (err, res) {
+	sql.query('Select * from games where id = $1', [id], function (err, res) {
 		if (err) {
-			console.log("error: ", err);
+			console.log('error: ', err);
 			result(err, null);
 		} else {
-			result(res[0]);
+			result(res.rows[0]);
 		}
 	});
 };
 
 Game.getGameByCode = function (data, result) {
-	sql.query("Select * FROM games where room_code = ?", data, function (
+	sql.query('SELECT * FROM games WHERE room_code = $1', [data], function (
 		err,
 		res
 	) {
 		if (err) {
-			console.log("error: ", err);
-			console.log(data);
+			console.log('get by code error: ', err);
 			result(false);
 		} else {
-			result(res[0]);
+			result(res.rows[0]);
 		}
 	});
 };
 
 Game.getAllGames = function (result) {
-	sql.query("Select * from games", function (err, res) {
+	sql.query('Select * from games', function (err, res) {
 		if (err) {
-			console.log("error: ", err);
+			console.log('error: ', err);
 			result(err);
 		} else {
-			result(res);
+			result(res.rows);
 		}
 	});
 };
 Game.updateByCode = function (data, result) {
 	sql.query(
-		"UPDATE games SET users = ? WHERE room_code = ?",
+		'UPDATE games SET users = $1 WHERE room_code = $2',
 		[JSON.stringify(data.userName), data.roomCode],
 		function (err, res) {
 			if (err) {
-				console.log("error: ", err);
+				console.log('update error: ', err);
 				result(err);
 			} else {
-				result(res);
+				result(res.rows[0]);
 			}
 		}
 	);
@@ -73,39 +72,42 @@ Game.updateByCode = function (data, result) {
 
 Game.updateGameState = function (data, result) {
 	sql.query(
-		"UPDATE games SET state = ? WHERE room_code = ?",
+		'UPDATE games SET state = $1 WHERE room_code = $2',
 		[JSON.stringify(data), data.roomCode],
 		function (err, res) {
 			if (err) {
-				console.log("error: ", err);
+				console.log('error: ', err);
 				result(err);
 			} else {
-				result(res);
+				result(res.rows[0]);
 			}
 		}
 	);
 };
 Game.updateDeckByCode = function (data, result) {
 	sql.query(
-		"UPDATE games SET deck = ?, lobby = 0 WHERE room_code = ?",
+		'UPDATE games SET deck = $1, lobby = 0 WHERE room_code = $2',
 		[JSON.stringify(data.deck), data.roomCode],
 		function (err, res) {
 			if (err) {
-				console.log("error: ", err);
+				console.log('error: ', err);
 				result(err);
 			} else {
-				result(res);
+				result(res.rows[0]);
 			}
 		}
 	);
 };
 Game.remove = function (id, result) {
-	sql.query("DELETE FROM games WHERE room_code = ?", id, function (err, res) {
+	sql.query('DELETE FROM games WHERE room_code = $1', [id], function (
+		err,
+		res
+	) {
 		if (err) {
-			console.log("error: ", err);
+			console.log('error: ', err);
 			result(err);
 		} else {
-			result(res);
+			result(res.rows[0]);
 		}
 	});
 };
