@@ -1,4 +1,4 @@
-socket = io.connect('https://localhost:3000');
+socket = io.connect('https://localhost:' + process.env.PORT || 3000);
 
 socket.on('404-error', () => {
 	window.location.href = '/';

@@ -1,15 +1,17 @@
-socket = io.connect("http://localhost:3000");
+socket = io.connect('https://localhost:' + process.env.PORT);
 
-const roomCode = document.getElementById("room-code");
-const userName = document.getElementById("username");
-const errorMessage = document.getElementById("error-message");
+console.log(process.env.PORT);
+
+const roomCode = document.getElementById('room-code');
+const userName = document.getElementById('username');
+const errorMessage = document.getElementById('error-message');
 
 createRoom = () => {
 	let data = {
 		roomCode: roomCode.value,
 		userName: userName.value,
 	};
-	socket.emit("createRoom", data);
+	socket.emit('createRoom', data);
 };
 
 joinRoom = () => {
@@ -17,30 +19,30 @@ joinRoom = () => {
 		roomCode: roomCode.value,
 		userName: userName.value,
 	};
-	socket.emit("findRoom", data);
+	socket.emit('findRoom', data);
 };
 
-socket.on("roomCreated", (roomId) => {
+socket.on('roomCreated', (roomId) => {
 	let data = {
 		roomCode: roomCode.value,
 		userName: userName.value,
 	};
-	localStorage.setItem("game_data", JSON.stringify(data));
-	window.location.href = "/lobby";
+	localStorage.setItem('game_data', JSON.stringify(data));
+	window.location.href = '/lobby';
 });
 
-socket.on("roomFound", (roomId) => {
+socket.on('roomFound', (roomId) => {
 	let data = {
 		roomCode: roomCode.value,
 		userName: userName.value,
 	};
-	localStorage.setItem("game_data", JSON.stringify(data));
-	window.location.href = "/lobby";
+	localStorage.setItem('game_data', JSON.stringify(data));
+	window.location.href = '/lobby';
 });
 
-socket.on("error-message", (err) => {
+socket.on('error-message', (err) => {
 	console.log(err);
-	errorMessage.classList.remove("hide");
+	errorMessage.classList.remove('hide');
 	for (let m of err) {
 		errorMessage.innerHTML += `<p>${m}</p>`;
 	}
@@ -49,7 +51,7 @@ socket.on("error-message", (err) => {
 
 setMessageTimer = () => {
 	setTimeout(() => {
-		errorMessage.classList.add("hide");
-		errorMessage.innerText = "";
+		errorMessage.classList.add('hide');
+		errorMessage.innerText = '';
 	}, 2000);
 };
