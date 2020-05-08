@@ -7,10 +7,9 @@ var space;
 var cardWidth;
 var cardHeight;
 var playSpaces;
+var socket = io();
 
 function setup() {
-	socket = io.connect('https://localhost:' + process.env.PORT || 3000);
-
 	socket.on('404-error', () => {
 		window.location.href = '/';
 	});

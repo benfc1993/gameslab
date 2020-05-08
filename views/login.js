@@ -1,6 +1,4 @@
-socket = io.connect('https://localhost:' + process.env.PORT);
-
-console.log(process.env.PORT);
+var socket = io();
 
 const roomCode = document.getElementById('room-code');
 const userName = document.getElementById('username');
