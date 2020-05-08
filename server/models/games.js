@@ -45,7 +45,7 @@ Game.getGameByCode = function (data, result) {
 	});
 };
 
-Game.getAllpublic.Games = function (result) {
+Game.getAllGames = function (result) {
 	sql.query('Select * from public.games', function (err, res) {
 		if (err) {
 			console.log('error: ', err);
@@ -70,7 +70,7 @@ Game.updateByCode = function (data, result) {
 	);
 };
 
-Game.updatepublic.GameState = function (data, result) {
+Game.updateGameState = function (data, result) {
 	sql.query(
 		'UPDATE public.games SET state = ? WHERE room_code = ?',
 		[JSON.stringify(data), data.roomCode],
