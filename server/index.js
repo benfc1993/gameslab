@@ -20,6 +20,8 @@ const sql = new Pool({
 });
 sql.connect();
 
+console.log("env", process.env.NODE_ENV);
+console.log("db url: ", process.env.DATABASE_URL);
 app.set("view engine", "ejs");
 
 app.use(express.static("./views"));
