@@ -4,8 +4,8 @@ require('dotenv').config();
 var express = require('express');
 var app = express();
 var server = app.listen(process.env.PORT, listening);
-var socket = require('socket.io');
-var io = socket(server);
+// var socket = require('socket.io');
+var io = socketIO(server);
 var sql = require('./db.js');
 
 sql.connect();
@@ -39,9 +39,11 @@ io.sockets.on('connection', newConnection);
 function newConnection(socket) {
 	console.log('socket connected !!!!!!');
 	socket.on('createRoom', (data) => {
+		console.log('creating room...........');
 		let msg = [];
 		if (data.roomCode.length == 4 && data.userName.length > 0) {
 			Games.getGameByCode(data.roomCode, (found) => {
+				console.log('get game by code: ', found);
 				if (!found) {
 					Games.createGame(data, (res) => {
 						socket.emit('roomCreated', res);
