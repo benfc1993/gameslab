@@ -37,6 +37,7 @@ app.use(express.static('./client'));
 io.sockets.on('connection', newConnection);
 
 function newConnection(socket) {
+	console.log('socket connected !!!!!!');
 	socket.on('createRoom', (data) => {
 		let msg = [];
 		if (data.roomCode.length == 4 && data.userName.length > 0) {
