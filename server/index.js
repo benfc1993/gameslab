@@ -3,7 +3,7 @@ console.log('server is starting');
 require('dotenv').config();
 var express = require('express');
 var app = express();
-var server = app.listen(3000, listening);
+var server = app.listen(process.env.PORT, listening);
 var socket = require('socket.io');
 var io = socket(server);
 // var sql = require("./db.js");
@@ -14,8 +14,9 @@ const sql = new Client({
 	connectionString: process.env.DATABASE_URL,
 	ssl: true,
 });
-app.set('view engine', 'ejs');
 sql.connect();
+
+app.set('view engine', 'ejs');
 
 app.use(express.static('./views'));
 app.get('/', (req, res) => {
@@ -35,7 +36,7 @@ var Games = require('./models/games.js');
 
 var connectCounter = 0;
 function listening() {
-	console.log('listening port:' + '3000');
+	console.log('listening port:' + process.env.PORT);
 }
 
 app.use(express.static('./client'));
