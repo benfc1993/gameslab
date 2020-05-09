@@ -79,5 +79,5 @@ startGame = () => {
 };
 shuffle = (a, b) => 0.5 - Math.random();
 socket.on('loadGame', () => {
-	window.location.href = '/game';
+	window.location.href = '/werewolf/game';
 });

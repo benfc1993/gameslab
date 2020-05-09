@@ -64,28 +64,34 @@
   font-size: 15px;
   text-transform: uppercase;
   cursor: pointer; }
-  .btn--create {
-    border: solid 3px #ff00a5;
-    color: #fff;
-    transition: 0.2s ease; }
-    .btn--create:hover {
-      background-color: #ff00a5; }
-  .btn--join {
-    border: solid 3px #fff;
-    background-color: #fff;
-    color: #222;
-    transition: 0.2s ease; }
-    .btn--join:hover {
-      background-color: #828282;
-      border-color: #828282; }
-  .btn--start {
-    border: solid 3px #4dc209;
-    background-color: #4dc209;
-    color: #222;
-    transition: 0.2s ease; }
-    .btn--start:hover {
-      background-color: #3d960a;
-      border-color: #3d960a; }
+
+.btn--create {
+  border: solid 3px #ff00a5;
+  color: #fff;
+  transition: 0.2s ease; }
+
+.btn--create:hover {
+  background-color: #ff00a5; }
+
+.btn--join {
+  border: solid 3px #fff;
+  background-color: #fff;
+  color: #222;
+  transition: 0.2s ease; }
+
+.btn--join:hover {
+  background-color: #828282;
+  border-color: #828282; }
+
+.btn--start {
+  border: solid 3px #4dc209;
+  background-color: #4dc209;
+  color: #222;
+  transition: 0.2s ease; }
+
+.btn--start:hover {
+  background-color: #3d960a;
+  border-color: #3d960a; }
 
 .template--login {
   background-color: #505050; }
@@ -105,23 +111,31 @@
   width: 50%;
   max-width: 500px;
   display: flex; }
-  .login-form__input {
-    color: #222;
-    font-size: 14px;
-    padding: 0 20px;
-    flex: 1;
-    height: 25px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.5); }
-  .login-form__label {
-    width: 25%;
-    background: #383838c7;
-    color: #fff;
-    line-height: 25px;
-    font-weight: 400;
-    text-align: center; }
-  .login-form .btn-group {
-    justify-content: space-between; }
+
+.login-form__select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  height: 25px; }
+
+.login-form__input {
+  color: #222;
+  font-size: 14px;
+  padding: 0 20px;
+  flex: 1;
+  height: 25px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.5); }
+
+.login-form__label {
+  width: 25%;
+  background: #383838c7;
+  color: #fff;
+  line-height: 25px;
+  font-weight: 400;
+  text-align: center; }
+
+.login-form .btn-group {
+  justify-content: space-between; }
 
 .error-message {
   padding: 0 15px;
@@ -159,9 +173,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center; }
-  .lobby-title__text {
-    color: #222;
-    font-size: 39px; }
+
+.lobby-title__text {
+  color: #222;
+  font-size: 39px; }
 
 .player-counter {
   font-size: 30px;
@@ -172,9 +187,10 @@
   flex-wrap: wrap;
   justify-content: space-around;
   width: 100%; }
-  @media (min-width: 768px) {
-    .players-list {
-      width: 45%; } }
+
+@media (min-width: 768px) {
+  .players-list {
+    width: 45%; } }
 
 .player-box {
   display: flex;
@@ -187,16 +203,18 @@
   background: linear-gradient(66deg, #616161 35%, #f5873a 80%);
   background-size: 150% 100%;
   animation: lobbyCards 16s infinite; }
-  .player-box--empty {
-    color: #222;
-    text-align: center;
-    border: solid #555 1px;
-    background: #fff;
-    justify-content: center; }
-  .player-box i {
-    font-size: 20px;
-    color: #ffe000;
-    margin-right: 15px; }
+
+.player-box--empty {
+  color: #222;
+  text-align: center;
+  border: solid #555 1px;
+  background: #fff;
+  justify-content: center; }
+
+.player-box i {
+  font-size: 20px;
+  color: #ffe000;
+  margin-right: 15px; }
 
 .deck-builder {
   display: flex;
@@ -206,28 +224,32 @@
   border-radius: 15px;
   border: 5px solid #636363;
   width: 100%; }
-  @media (min-width: 768px) {
-    .deck-builder {
-      width: 45%; } }
-  .deck-builder .card-field {
-    width: 33.33%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px; }
-    .deck-builder .card-field label {
-      width: 100px;
-      text-align: center;
-      margin-bottom: 10px; }
-    .deck-builder .card-field input {
-      border: none;
-      background-color: rgba(0, 0, 0, 0.3);
-      font-size: 20px;
-      height: 50px;
-      width: 50px;
-      color: #ffca00;
-      text-align: center; }
+
+@media (min-width: 768px) {
+  .deck-builder {
+    width: 45%; } }
+
+.deck-builder .card-field {
+  width: 33.33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; }
+
+.deck-builder .card-field label {
+  width: 100px;
+  text-align: center;
+  margin-bottom: 10px; }
+
+.deck-builder .card-field input {
+  border: none;
+  background-color: rgba(0, 0, 0, 0.3);
+  font-size: 20px;
+  height: 50px;
+  width: 50px;
+  color: #ffca00;
+  text-align: center; }
 
 @keyframes lobbyCards {
   0% {
@@ -241,8 +263,9 @@
   display: flex;
   justify-content: center;
   background: #323232; }
-  .game--template * {
-    font-family: 'Permanent Marker', cursive; }
+
+.game--template * {
+  font-family: 'Permanent Marker', cursive; }
 
 button {
   border: none;
@@ -251,8 +274,9 @@ button {
   font-size: 16px;
   color: #fff;
   cursor: pointer; }
-  button:hover {
-    background-color: #31a0a0; }
+
+button:hover {
+  background-color: #31a0a0; }
 
 * {
   box-sizing: border-box;

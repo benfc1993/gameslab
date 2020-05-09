@@ -43,7 +43,7 @@ socket.on('roomCreated', (roomId) => {
 		userName: userName.value,
 	};
 	localStorage.setItem('game_data', JSON.stringify(data));
-	window.location.href = '/lobby';
+	window.location.href = '/werewolf/lobby';
 });
 
 socket.on('roomFound', (roomId) => {
@@ -52,7 +52,7 @@ socket.on('roomFound', (roomId) => {
 		userName: userName.value,
 	};
 	localStorage.setItem('game_data', JSON.stringify(data));
-	window.location.href = '/lobby';
+	window.location.href = '/werewolf/lobby';
 });
 
 socket.on('error-message', (err) => {

@@ -1,0 +1,14 @@
+@import './werewolf/scss/utils.scss';
+@import './werewolf/scss/buttons.scss';
+@import './werewolf/scss/login.scss';
+@import './werewolf/scss/lobby.scss';
+@import './werewolf/scss/game.scss';
+
+* {
+	box-sizing: border-box;
+	font-family: 'Montserrat', sans-serif;
+}
+body {
+	margin: 0;
+	height: 100vh;
+}

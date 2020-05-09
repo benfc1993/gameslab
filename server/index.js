@@ -17,12 +17,12 @@ app.get('/', (req, res) => {
 	res.render('index');
 });
 
-app.get('/lobby', (req, res) => {
-	res.render('lobby');
+app.get('/werewolf/lobby', (req, res) => {
+	res.render('./werewolf/lobby');
 });
 
-app.get('/game', (req, res) => {
-	res.render('game');
+app.get('/werewolf/game', (req, res) => {
+	res.render('./werewolf/game');
 });
 
 var Games = require('./models/games.js');
