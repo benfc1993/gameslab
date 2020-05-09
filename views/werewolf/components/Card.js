@@ -40,6 +40,7 @@ class Card {
 		rect(this.pos.x, this.pos.y, this.width, this.height);
 		if ((this.view && this.counter < 100) || state.game.end) {
 			push();
+			textSize(20);
 			textAlign(CENTER);
 			noStroke();
 			fill(50);
