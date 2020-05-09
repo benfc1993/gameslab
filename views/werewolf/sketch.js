@@ -183,7 +183,7 @@ function draw() {
 		} else if (state.game.vote && !state.game.reveal) {
 			this.stage = 'Voting';
 		} else if (state.game.reveal && !state.game.end) {
-			this.stage = 'Reveal';
+			this.stage = 'Kill';
 		} else if (state.game.end) {
 			this.stage = 'Game over';
 		}

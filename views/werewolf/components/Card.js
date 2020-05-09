@@ -38,7 +38,7 @@ class Card {
 		fill(245, 135, 58);
 		stroke(123, 54, 72);
 		rect(this.pos.x, this.pos.y, this.width, this.height);
-		if (this.view && this.counter < 100) {
+		if ((this.view && this.counter < 100) || state.game.end) {
 			push();
 			textAlign(CENTER);
 			noStroke();
