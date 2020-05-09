@@ -9,93 +9,105 @@
 	<body>
 		<div class="template lobby--template h-100">
 			<div class="container">
-				<div class="row"></div>
-				<h1 id="lobby-title" class="lobby-title"></h1>
-				<div id="player-counter" class="player-counter"></div>
-				<div id="users-list" class="players-list"></div>
-				<button
-					id="start-button"
-					class="btn btn--start hide"
-					onclick="startGame()"
-				>
-					Start Game
-				</button>
-				<div class="deck-builder">
-					<div class="card-field" data-type="Werewolf">
-						<label for="Werewolf">Werewolf</label>
-						<input
-							type="number"
-							name="Werewolf"
-							class="card-field__qty"
-							disabled
-						/>
+				<div class="lobby-title">
+					<h1 id="lobby-title" class="lobby-title__text"></h1>
+					<div id="player-counter" class="player-counter"></div>
+				</div>
+				<div class="lobby-content row m-auto">
+					<div id="users-list" class="players-list"></div>
+					<div class="deck-builder">
+						<div class="card-field" data-type="Werewolf">
+							<label for="Werewolf">Werewolf</label>
+							<input
+								type="number"
+								name="Werewolf"
+								class="card-field__qty"
+								disabled
+							/>
+						</div>
+						<div class="card-field" data-type="Villager">
+							<label for="Villager">Villager</label>
+							<input
+								type="number"
+								name="Villager"
+								class="card-field__qty"
+								disabled
+							/>
+						</div>
+						<div class="card-field" data-type="Seer">
+							<label for="Seer">Seer</label>
+							<input
+								type="number"
+								name="Seer"
+								class="card-field__qty"
+								disabled
+							/>
+						</div>
+						<div class="card-field" data-type="Robber">
+							<label for="Robber">Robber</label>
+							<input
+								type="number"
+								name="Robber"
+								class="card-field__qty"
+								disabled
+							/>
+						</div>
+						<div class="card-field" data-type="Trickster">
+							<label for="Trickster">Trickster</label>
+							<input
+								type="number"
+								name="Trickster"
+								class="card-field__qty"
+								disabled
+							/>
+						</div>
+						<div class="card-field" data-type="Minion">
+							<label for="Minion">Minion</label>
+							<input
+								type="number"
+								name="Minion"
+								class="card-field__qty"
+								disabled
+							/>
+						</div>
+						<div class="card-field" data-type="Tanner">
+							<label for="Tanner">Tanner</label>
+							<input
+								type="number"
+								name="Tanner"
+								class="card-field__qty"
+								disabled
+							/>
+						</div>
+						<div class="card-field" data-type="Drunk">
+							<label for="Drunk">Drunk</label>
+							<input
+								type="number"
+								name="Drunk"
+								class="card-field__qty"
+								disabled
+							/>
+						</div>
+						<div class="card-field" data-type="Insomniac">
+							<label for="Insomniac">Insomniac</label>
+							<input
+								type="number"
+								name="Insomniac"
+								class="card-field__qty"
+								disabled
+							/>
+						</div>
 					</div>
-					<div class="card-field" data-type="Villager">
-						<label for="Villager">Villager</label>
-						<input
-							type="number"
-							name="Villager"
-							class="card-field__qty"
-							disabled
-						/>
-					</div>
-					<div class="card-field" data-type="Seer">
-						<label for="Seer">Seer</label>
-						<input type="number" name="Seer" class="card-field__qty" disabled />
-					</div>
-					<div class="card-field" data-type="Robber">
-						<label for="Robber">Robber</label>
-						<input
-							type="number"
-							name="Robber"
-							class="card-field__qty"
-							disabled
-						/>
-					</div>
-					<div class="card-field" data-type="Trickster">
-						<label for="Trickster">Trickster</label>
-						<input
-							type="number"
-							name="Trickster"
-							class="card-field__qty"
-							disabled
-						/>
-					</div>
-					<div class="card-field" data-type="Minion">
-						<label for="Minion">Minion</label>
-						<input
-							type="number"
-							name="Minion"
-							class="card-field__qty"
-							disabled
-						/>
-					</div>
-					<div class="card-field" data-type="Tanner">
-						<label for="Tanner">Tanner</label>
-						<input
-							type="number"
-							name="Tanner"
-							class="card-field__qty"
-							disabled
-						/>
-					</div>
-					<div class="card-field" data-type="Drunk">
-						<label for="Drunk">Drunk</label>
-						<input
-							type="number"
-							name="Drunk"
-							class="card-field__qty"
-							disabled
-						/>
-					</div>
-					<div class="card-field" data-type="Insomniac">
-						<label for="Insomniac">Insomniac</label>
-						<input
-							type="number"
-							name="Insomniac"
-							class="card-field__qty"
-							disabled
-						/>
+				</div>
+				<div class="container">
+					<div class="row justify-content-end">
+						<button
+							id="start-button"
+							class="btn btn--start hide justify-self-end"
+							onclick="startGame()"
+						>
+							Start Game
+						</button>
 					</div>
 				</div>
 			</div>

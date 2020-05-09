@@ -9,6 +9,7 @@ var cardHeight;
 var playSpaces;
 var socket = io(window.location.origin);
 var userData;
+
 function setup() {
 	socket.on('404-error', () => {
 		window.location.href = '/';
@@ -45,7 +46,7 @@ function setup() {
 
 		console.log(localPlayer.selected);
 
-		createCanvas(800, 800);
+		createCanvas(windowWidth, windowHeight);
 		state = {
 			roomCode: userData.roomCode,
 			players: [],
