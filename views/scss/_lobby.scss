@@ -6,41 +6,113 @@
 	background-position: center;
 	color: #fff;
 }
+.lobby-content {
+	flex-wrap: wrap;
+	width: 100%;
+	justify-content: space-between;
+	margin-top: 50px;
+	margin-bottom: 30px;
+	// @media (min-width: 992px) {
+	// 	width: 50%;
+	// }
+}
 .lobby-title {
-	color: #222;
-	font-size: 39px;
 	background: #fff8f83b;
 	margin: 0 -30px;
 	padding: 15px 30px;
 	border-bottom: solid 5px orange;
 	position: sticky;
 	top: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	&__text {
+		color: #222;
+		font-size: 39px;
+	}
 }
 .player-counter {
 	font-size: 30px;
 	margin-top: 15px;
 }
 .players-list {
-	margin: 50px 0;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-around;
+	width: 100%;
+	@media (min-width: 768px) {
+		width: 45%;
+	}
 }
 .player-box {
 	display: flex;
 	align-items: center;
 	padding: 0 15px;
 	height: 80px;
-	width: 40%;
+	width: 100%;
 	background-color: #0000008c;
 	margin-bottom: 15px;
+	background: linear-gradient(66deg, #616161 35%, #f5873a 80%);
+	background-size: 150% 100%;
+	animation: lobbyCards 16s infinite;
 	&--empty {
+		color: #222;
+		text-align: center;
 		border: solid #555 1px;
-		background-color: transparent;
+		background: #fff;
+		justify-content: center;
 	}
 	i {
 		font-size: 20px;
 		color: #ffe000;
 		margin-right: 15px;
+	}
+}
+
+.deck-builder {
+	display: flex;
+	flex-wrap: wrap;
+	background: #505050;
+	padding: 15px 0;
+	border-radius: 15px;
+	border: 5px solid #636363;
+	width: 100%;
+	@media (min-width: 768px) {
+		width: 45%;
+	}
+	.card-field {
+		width: 33.33%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 20px;
+
+		label {
+			width: 100px;
+			text-align: center;
+			margin-bottom: 10px;
+		}
+		input {
+			border: none;
+			background-color: rgba(0, 0, 0, 0.3);
+			font-size: 20px;
+			height: 50px;
+			width: 50px;
+			color: #ffca00;
+			text-align: center;
+		}
+	}
+}
+
+@keyframes lobbyCards {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
 	}
 }

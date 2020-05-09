@@ -40,13 +40,10 @@ process.on('unhandledRejection', (error) => {
 	console.log('unhandledRejection', error.message);
 });
 function newConnection(socket) {
-	console.log('socket connected !!!!!!');
 	socket.on('createRoom', (data) => {
-		console.log('creating room...........');
 		let msg = [];
 		if (data.roomCode.length == 4 && data.userName.length > 0) {
 			Games.getGameByCode(data.roomCode, (found) => {
-				console.log('get game by code: ', found);
 				if (!found) {
 					Games.createGame(data, (res) => {
 						socket.emit('roomCreated', res);

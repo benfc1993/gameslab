@@ -46,6 +46,18 @@
 .mb-auto {
   margin-bottom: auto; }
 
+.justify-content-center {
+  justify-content: center; }
+
+.justify-content-end {
+  justify-content: flex-end; }
+
+.w-100 {
+  width: 100%; }
+
+.w-50 {
+  width: 50%; }
+
 .btn {
   background-color: transparent;
   padding: 7px 50px;
@@ -72,8 +84,8 @@
     color: #222;
     transition: 0.2s ease; }
     .btn--start:hover {
-      background-color: #828282;
-      border-color: #828282; }
+      background-color: #3d960a;
+      border-color: #3d960a; }
 
 .template--login {
   background-color: #505050; }
@@ -130,41 +142,100 @@
   background-position: center;
   color: #fff; }
 
+.lobby-content {
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 50px;
+  margin-bottom: 30px; }
+
 .lobby-title {
-  color: #222;
-  font-size: 39px;
   background: #fff8f83b;
   margin: 0 -30px;
   padding: 15px 30px;
   border-bottom: solid 5px orange;
   position: sticky;
-  top: 0; }
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .lobby-title__text {
+    color: #222;
+    font-size: 39px; }
 
 .player-counter {
   font-size: 30px;
   margin-top: 15px; }
 
 .players-list {
-  margin: 50px 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around; }
+  justify-content: space-around;
+  width: 100%; }
+  @media (min-width: 768px) {
+    .players-list {
+      width: 45%; } }
 
 .player-box {
   display: flex;
   align-items: center;
   padding: 0 15px;
   height: 80px;
-  width: 40%;
+  width: 100%;
   background-color: #0000008c;
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+  background: linear-gradient(66deg, #616161 35%, #f5873a 80%);
+  background-size: 150% 100%;
+  animation: lobbyCards 16s infinite; }
   .player-box--empty {
+    color: #222;
+    text-align: center;
     border: solid #555 1px;
-    background-color: transparent; }
+    background: #fff;
+    justify-content: center; }
   .player-box i {
     font-size: 20px;
     color: #ffe000;
     margin-right: 15px; }
+
+.deck-builder {
+  display: flex;
+  flex-wrap: wrap;
+  background: #505050;
+  padding: 15px 0;
+  border-radius: 15px;
+  border: 5px solid #636363;
+  width: 100%; }
+  @media (min-width: 768px) {
+    .deck-builder {
+      width: 45%; } }
+  .deck-builder .card-field {
+    width: 33.33%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; }
+    .deck-builder .card-field label {
+      width: 100px;
+      text-align: center;
+      margin-bottom: 10px; }
+    .deck-builder .card-field input {
+      border: none;
+      background-color: rgba(0, 0, 0, 0.3);
+      font-size: 20px;
+      height: 50px;
+      width: 50px;
+      color: #ffca00;
+      text-align: center; }
+
+@keyframes lobbyCards {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
 
 * {
   box-sizing: border-box;

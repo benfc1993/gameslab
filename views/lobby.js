@@ -50,7 +50,7 @@ socket.on('updateLobby', (users) => {
 		}${user}</p></div>`;
 	});
 	for (let i = users.length; i < 6; i++) {
-		usersList.innerHTML += `<div class="player-box player-box--empty"></div>`;
+		usersList.innerHTML += `<div class="player-box player-box--empty"><p>Join with Code: ${userData.roomCode}</p></div>`;
 	}
 	if (host) {
 		startButton.classList.remove('hide');
