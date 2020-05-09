@@ -68,12 +68,14 @@ function newConnection(socket) {
 	});
 	socket.on('findRoom', (data) => {
 		Games.getGameByCode(data.roomCode, (res) => {
-			if (res && res.lobby == 1) {
-				socket.userName = data.userName;
-				socket.roomCode = data.roomCode;
-				socket.emit('roomFound', res);
-			} else if (res.lobby != 1) {
-				socket.emit('error-message', ['Game started']);
+			if (res) {
+				if (res && res.lobby == 1) {
+					socket.userName = data.userName;
+					socket.roomCode = data.roomCode;
+					socket.emit('roomFound', res);
+				} else if (res.lobby != 1) {
+					socket.emit('error-message', ['Game started']);
+				}
 			} else {
 				socket.emit('error-message', ['Room not found']);
 			}
