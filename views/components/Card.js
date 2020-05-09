@@ -35,7 +35,7 @@ class Card {
 		this.move();
 	}
 	show() {
-		fill(255, 234, 12);
+		fill(245, 135, 58);
 		stroke(123, 54, 72);
 		rect(this.pos.x, this.pos.y, this.width, this.height);
 		if (this.view && this.counter < 100) {

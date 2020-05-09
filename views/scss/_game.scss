@@ -1,3 +1,12 @@
+.game--template {
+	display: flex;
+	justify-content: center;
+	background: rgb(50, 50, 50);
+	* {
+		font-family: 'Permanent Marker', cursive;
+	}
+}
+
 button {
 	border: none;
 	background-color: #33bfbf;

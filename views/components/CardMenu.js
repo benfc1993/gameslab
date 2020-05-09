@@ -25,37 +25,37 @@ class CardMenu {
 	}
 
 	showButtons() {
-		console.log('show');
 		this.close = createButton('close');
-		this.close.size(this.width, 30);
+		this.close.size(60, 30);
 		this.close.position(
-			this.x + this.width / 2,
+			this.x + (windowWidth / 2 - width / 2) + this.width / 2,
 			this.y + this.card.height + 10
 		);
 		if (!this.card.selected && !localPlayer.selected) {
-			this.select = createButton('select');
-			this.select.size(50, 30);
-			this.select.position(
-				this.x + this.width / 2,
-				this.y + this.card.height + 50
-			);
+			if (state.game.turn == localPlayer.seat) {
+				this.select = createButton('select');
+				this.select.size(60, 30);
+				this.select.position(
+					this.x + (windowWidth / 2 - width / 2) + this.width / 2,
+					this.y + this.card.height + 50
+				);
+			}
 		} else {
 			if (state.game.night) {
 				this.view = createButton('view');
-				this.view.size(50, 30);
+				this.view.size(60, 30);
 				this.view.position(
-					this.x + this.width / 2,
+					this.x + (windowWidth / 2 - width / 2) + this.width / 2,
 					this.y + this.card.height + 50
 				);
 			}
 			this.swap = createButton('swap');
-			this.swap.size(50, 30);
+			this.swap.size(60, 30);
 			this.swap.position(
-				this.x + this.width / 2,
+				this.x + (windowWidth / 2 - width / 2) + this.width / 2,
 				this.y + this.card.height + 90
 			);
 		}
-		console.log('end show');
 	}
 
 	removeButtons() {
@@ -86,6 +86,7 @@ class CardMenu {
 				this.select.mousePressed(() => {
 					localPlayer.selected = true;
 					localPlayer.startCard = this.card;
+					state.game.turn++;
 					state.players.forEach((player) => {
 						if (player.id == localPlayer.seat) {
 							localPlayer.card = this.card;

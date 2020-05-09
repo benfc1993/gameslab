@@ -237,6 +237,13 @@
   100% {
     background-position: 0% 50%; } }
 
+.game--template {
+  display: flex;
+  justify-content: center;
+  background: #323232; }
+  .game--template * {
+    font-family: 'Permanent Marker', cursive; }
+
 button {
   border: none;
   background-color: #33bfbf;

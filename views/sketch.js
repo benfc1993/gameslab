@@ -9,8 +9,12 @@ var cardHeight;
 var playSpaces;
 var socket = io(window.location.origin);
 var userData;
-
+var font;
+function preload() {
+	font = loadFont('./font/PermanentMarker-Regular.ttf');
+}
 function setup() {
+	textFont(font);
 	socket.on('404-error', () => {
 		window.location.href = '/';
 	});
@@ -27,8 +31,6 @@ function setup() {
 		let dataUsers = JSON.parse(data.users);
 		let dataCards = JSON.parse(data.deck);
 		let dataState = JSON.parse(data.state);
-		console.log(dataState);
-		console.log(dataUsers);
 		localPlayer = {
 			host: dataUsers.indexOf(userData.userName) == 0,
 			seat: dataUsers.indexOf(userData.userName),
@@ -44,9 +46,7 @@ function setup() {
 					: false,
 		};
 
-		console.log(localPlayer.selected);
-
-		createCanvas(windowWidth, windowHeight);
+		createCanvas(1200, 800);
 		state = {
 			roomCode: userData.roomCode,
 			players: [],
@@ -59,14 +59,16 @@ function setup() {
 				night: dataState != null ? dataState.game.night : true,
 				vote: dataState != null ? dataState.game.vote : false,
 				reveal: dataState != null ? dataState.game.reveal : false,
+				end: dataState != null ? dataState.game.end : false,
 				started: 1,
+				turn: dataState != null ? dataState.game.turn : 0,
 			},
 		};
 		var cardMarginX = 20;
 		var cardMarginY = 0;
 		gutter = 30;
 		center = width - gutter * 2;
-		space = center / state.cards.length;
+		space = 125;
 		cardWidth = space - cardMarginX;
 		cardHeight = space + cardMarginY;
 		playSpaces = [];
@@ -93,11 +95,9 @@ function setup() {
 						new CardMenu()
 					)
 				);
-				console.log(gutter + space * index);
 			}
 		});
 		dataUsers.forEach((user, index) => {
-			console.log(user);
 			state.players.push({
 				id: index,
 				name: user,
@@ -139,9 +139,9 @@ function setup() {
 		if (localPlayer.host) {
 			this.button = createButton('Next');
 			this.button.size(150, 60);
-			this.button.position(width - 200, 30);
+			this.button.position(windowWidth / 2 + width / 2 - 200, 30);
 			this.button.mouseClicked(() => {
-				if (state.game.night) {
+				if (state.game.night && state.game.turn >= state.players.length) {
 					state.game.night = false;
 					sendState();
 					state.deck.forEach((card) => {
@@ -158,10 +158,12 @@ function setup() {
 					state.game.reveal = true;
 					sendState();
 				} else if (state.game.reveal) {
+					state.game.end = true;
 					this.stage = 'Game over';
+					sendState();
 					this.button = createButton('End Game');
 					this.button.size(150, 60);
-					this.button.position(width - 200, 30);
+					this.button.position(windowWidth / 2 + width / 2 - 200, 30);
 					this.button.mouseClicked(() => {
 						socket.emit('endGame', userData.roomCode);
 						sendState();
@@ -180,8 +182,10 @@ function draw() {
 			this.stage = 'Day';
 		} else if (state.game.vote && !state.game.reveal) {
 			this.stage = 'Voting';
-		} else if (state.game.reveal) {
+		} else if (state.game.reveal && !state.game.end) {
 			this.stage = 'Reveal';
+		} else if (state.game.end) {
+			this.stage = 'Game over';
 		}
 	}
 	if (localPlayer && state) {
@@ -197,9 +201,17 @@ function draw() {
 			space.show();
 		});
 		fill(255);
-		console.log(this.stage);
-		textSize(20);
+		textSize(30);
 		text(this.stage, width - 200, 120);
+		if (state.game.turn == localPlayer.seat && state.game.night) {
+			push();
+			fill(245, 135, 58);
+			noStroke();
+			textSize(34);
+			textAlign(CENTER);
+			text('Select a card', width / 2, height / 2 - cardHeight - 30);
+			pop();
+		}
 	}
 }
 
@@ -249,8 +261,6 @@ function sendState() {
 		minDeck.push(newCard);
 	});
 	state.players[localPlayer.seat].selected = localPlayer.selected;
-	console.log('selected', localPlayer.selected);
-	console.log('state selected', state.players[localPlayer.seat].selected);
 	minState = {
 		roomCode: state.roomCode,
 		players: state.players,

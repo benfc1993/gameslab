@@ -19,7 +19,11 @@ class PlayerSpace {
 
 	show() {
 		noFill();
-		stroke(255);
+		if (this.id == state.game.turn) {
+			stroke(245, 135, 58);
+		} else {
+			stroke(255);
+		}
 		rect(this.pos.x, this.pos.y, space, space + 20);
 		fill(255);
 		textSize(16);
@@ -34,8 +38,9 @@ class PlayerSpace {
 			push();
 			fill(255, 12, 10);
 			noStroke();
-			textSize(24);
-			text('Voted', width / 2, 50);
+			textSize(34);
+			textAlign(CENTER);
+			text('Voted', width / 2, height / 2);
 			pop();
 			this.textCounter++;
 		}
@@ -59,7 +64,6 @@ class PlayerSpace {
 		}
 	}
 	clicked() {
-		console.log(state.game.vote);
 		if (
 			mouseX > this.pos.x &&
 			mouseX < this.pos.x + space &&
