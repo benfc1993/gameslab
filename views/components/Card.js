@@ -42,7 +42,7 @@ class Card {
 			push();
 			textAlign(CENTER);
 			noStroke();
-			fill(255);
+			fill(50);
 			text(
 				this.text,
 				this.pos.x,
