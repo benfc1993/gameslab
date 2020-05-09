@@ -25,15 +25,15 @@ class CardMenu {
 	}
 
 	showButtons() {
-		console.log("show");
-		this.close = createButton("close");
+		console.log('show');
+		this.close = createButton('close');
 		this.close.size(this.width, 30);
 		this.close.position(
 			this.x + this.width / 2,
 			this.y + this.card.height + 10
 		);
 		if (!this.card.selected && !localPlayer.selected) {
-			this.select = createButton("select");
+			this.select = createButton('select');
 			this.select.size(50, 30);
 			this.select.position(
 				this.x + this.width / 2,
@@ -41,21 +41,21 @@ class CardMenu {
 			);
 		} else {
 			if (state.game.night) {
-				this.view = createButton("view");
+				this.view = createButton('view');
 				this.view.size(50, 30);
 				this.view.position(
 					this.x + this.width / 2,
 					this.y + this.card.height + 50
 				);
 			}
-			this.swap = createButton("swap");
+			this.swap = createButton('swap');
 			this.swap.size(50, 30);
 			this.swap.position(
 				this.x + this.width / 2,
 				this.y + this.card.height + 90
 			);
 		}
-		console.log("end show");
+		console.log('end show');
 	}
 
 	removeButtons() {
@@ -92,8 +92,9 @@ class CardMenu {
 						}
 					});
 					this.card.selected = true;
-					this.card.destination.x = localPlayer.playSpace.pos.x + 40;
-					this.card.destination.y = localPlayer.playSpace.pos.y + 20;
+					this.card.destination.x =
+						localPlayer.playSpace.pos.x + (space - cardWidth) / 2;
+					this.card.destination.y = localPlayer.playSpace.pos.y + 10;
 					this.display = false;
 					this.removeButtons();
 					this.show();

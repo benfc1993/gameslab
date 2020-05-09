@@ -4,6 +4,10 @@ const roomCode = document.getElementById('room-code');
 const userName = document.getElementById('username');
 const errorMessage = document.getElementById('error-message');
 var old;
+
+clearGame = (code) => {
+	socket.emit('endGame', code);
+};
 roomCode.addEventListener('keyup', () => {
 	if (roomCode.value.length > 4) {
 		roomCode.value = old;

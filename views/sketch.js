@@ -15,11 +15,7 @@ function setup() {
 		window.location.href = '/';
 	});
 	state = {};
-	document.getElementById('end-game').addEventListener('click', () => {
-		console.log('end game');
-		socket.emit('endGame', userData.roomCode);
-		sendState();
-	});
+	this.stage = 'Night';
 	userData = JSON.parse(localStorage.getItem('game_data'));
 	socket.emit('joinGame', userData);
 
@@ -42,6 +38,10 @@ function setup() {
 					: false,
 			startCard: null,
 			playSpace: null,
+			voted:
+				dataState != null
+					? dataState.players[dataUsers.indexOf(userData.userName)].voted
+					: false,
 		};
 
 		console.log(localPlayer.selected);
@@ -56,12 +56,13 @@ function setup() {
 				swap: false,
 				swapStart: null,
 				swapEnd: null,
-				night: true,
-				vote: false,
+				night: dataState != null ? dataState.game.night : true,
+				vote: dataState != null ? dataState.game.vote : false,
+				reveal: dataState != null ? dataState.game.reveal : false,
 				started: 1,
 			},
 		};
-		var cardMarginX = 5;
+		var cardMarginX = 20;
 		var cardMarginY = 0;
 		gutter = 30;
 		center = width - gutter * 2;
@@ -84,14 +85,15 @@ function setup() {
 			} else {
 				state.deck.push(
 					new Card(
-						gutter + space * index + cardMarginX,
+						gutter + space * index,
 						height / 2 - cardHeight / 2 + cardMarginY,
-						gutter + space * index + cardMarginX,
+						gutter + space * index,
 						height / 2 - cardHeight / 2 + cardMarginY,
 						card,
 						new CardMenu()
 					)
 				);
+				console.log(gutter + space * index);
 			}
 		});
 		dataUsers.forEach((user, index) => {
@@ -101,6 +103,8 @@ function setup() {
 				name: user,
 				card: null,
 				selected: dataState != null ? dataState.players[index].selected : '',
+				voted: dataState != null ? dataState.players[index].voted : '',
+				votes: 0,
 			});
 		});
 		state.players.forEach((player, index) => {
@@ -116,7 +120,6 @@ function setup() {
 				dataState.players[dataUsers.indexOf(userData.userName)].selected;
 		}
 		if (localPlayer.host && dataState == null) {
-			console.log('host send state');
 			sendState();
 		}
 		if (localPlayer.seat != null && dataState != null) {
@@ -125,59 +128,64 @@ function setup() {
 		// socket.on("updateState", (data) => (state = data));
 		socket.on('newState', (data) => {
 			state.players = data.players;
+			state.game = data.game;
 			state.deck.forEach((card, index) => {
 				card.pos.x = data.deck[index].posX;
 				card.pos.y = data.deck[index].posY;
 				card.destination.x = data.deck[index].desX;
 				card.destination.y = data.deck[index].desY;
 			});
-
-			state.game = data.game;
 		});
 		if (localPlayer.host) {
-			this.continue = createButton('Start Day');
-			this.continue.size(150, 60);
-			this.continue.position(width - 200, 30);
-			this.continue.mouseClicked(() => {
-				state.game.night = false;
-				sendState();
-				state.deck.forEach((card) => {
-					card.menu.removeButtons();
-					this.vote = createButton('VOTE!');
-					this.vote.size(150, 60);
-					this.vote.position(width - 200, 30);
-					this.vote.mouseClicked(() => {
-						state.game.vote = true;
-						this.endGame = createButton('End Game!');
-						this.endGame.size(150, 60);
-						this.endGame.position(width - 200, 30);
-						sendState();
-						this.endGame.mouseClicked(() => {
-							console.log('end game');
-							socket.emit('endGame', userData.roomCode);
-							sendState();
-						});
+			this.button = createButton('Next');
+			this.button.size(150, 60);
+			this.button.position(width - 200, 30);
+			this.button.mouseClicked(() => {
+				if (state.game.night) {
+					state.game.night = false;
+					sendState();
+					state.deck.forEach((card) => {
+						card.menu.removeButtons();
 					});
-				});
+				} else if (
+					!state.game.night &&
+					!state.game.vote &&
+					!state.game.reveal
+				) {
+					state.game.vote = true;
+					sendState();
+				} else if (state.game.vote && !state.game.reveal) {
+					state.game.reveal = true;
+					sendState();
+				} else if (state.game.reveal) {
+					this.stage = 'Game over';
+					this.button = createButton('End Game');
+					this.button.size(150, 60);
+					this.button.position(width - 200, 30);
+					this.button.mouseClicked(() => {
+						socket.emit('endGame', userData.roomCode);
+						sendState();
+					});
+				}
 			});
 		}
 	});
 }
 
 function draw() {
+	if (state.game != null) {
+		if (state.game.night) {
+			this.stage = 'Night';
+		} else if (!state.game.night && !state.game.vote && !state.game.reveal) {
+			this.stage = 'Day';
+		} else if (state.game.vote && !state.game.reveal) {
+			this.stage = 'Voting';
+		} else if (state.game.reveal) {
+			this.stage = 'Reveal';
+		}
+	}
 	if (localPlayer && state) {
 		background(50);
-		if (localPlayer.host) {
-			if (state.game.night) {
-				this.continue;
-			} else if (!state.game.vote) {
-				this.continue.remove();
-				this.vote;
-			} else {
-				this.vote.remove();
-				this.endgame;
-			}
-		}
 		state.deck.forEach((card) => {
 			card.update();
 			card.show();
@@ -188,6 +196,10 @@ function draw() {
 		playSpaces.forEach((space) => {
 			space.show();
 		});
+		fill(255);
+		console.log(this.stage);
+		textSize(20);
+		text(this.stage, width - 200, 120);
 	}
 }
 
@@ -198,6 +210,9 @@ function mouseClicked() {
 		} else if (state.game.swap) {
 			card.swap();
 		}
+	});
+	playSpaces.forEach((space) => {
+		space.clicked();
 	});
 }
 

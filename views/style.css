@@ -237,6 +237,16 @@
   100% {
     background-position: 0% 50%; } }
 
+button {
+  border: none;
+  background-color: #33bfbf;
+  transition: 0.2s ease;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer; }
+  button:hover {
+    background-color: #31a0a0; }
+
 * {
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif; }
