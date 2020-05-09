@@ -41,7 +41,7 @@ class CardMenu {
 				);
 			}
 		} else {
-			if (state.game.night) {
+			if (state.game.night || state.game.end) {
 				this.view = createButton('view');
 				this.view.size(60, 30);
 				this.view.position(
