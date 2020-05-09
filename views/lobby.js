@@ -5,6 +5,7 @@ socket.on('404-error', () => {
 });
 
 const lobbyTitle = document.getElementById('lobby-title');
+const playerCounter = document.getElementById('player-counter');
 const usersList = document.getElementById('users-list');
 const userData = JSON.parse(localStorage.getItem('game_data'));
 const cardFields = document.getElementsByClassName('card-field');
@@ -29,10 +30,11 @@ for (let field of cardFields) {
 
 socket.emit('joinLobby', userData);
 
-lobbyTitle.innerText = `Lobby for ${userData.roomCode}`;
+lobbyTitle.innerText = `LOBBY - ${userData.roomCode}`;
 
 socket.on('updateLobby', (users) => {
 	console.log('update');
+	playerCounter.innerText = `${users.length} / 6`;
 	usersList.innerHTML = '';
 	users.forEach((user, index) => {
 		if (index == 0) {
@@ -43,10 +45,13 @@ socket.on('updateLobby', (users) => {
 		if (localUsers.indexOf(user) == -1) {
 			localUsers.push(user);
 		}
-		usersList.innerHTML += `<div class="user">${
-			index == 0 ? `<p>Host</p>` : ``
-		}<p>${user}</p></div>`;
+		usersList.innerHTML += `<div class="player-box">${
+			index == 0 ? `<p><i class="fa fa-crown"></i>` : ``
+		}${user}</p></div>`;
 	});
+	for (let i = users.length; i < 6; i++) {
+		usersList.innerHTML += `<div class="player-box player-box--empty"></div>`;
+	}
 	if (host) {
 		startButton.classList.remove('hide');
 		for (let field of cardFields) {

@@ -1,0 +1,46 @@
+.lobby--template {
+	background-color: #505050;
+	background-image: url('../images/untitled-design-97.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	color: #fff;
+}
+.lobby-title {
+	color: #222;
+	font-size: 39px;
+	background: #fff8f83b;
+	margin: 0 -30px;
+	padding: 15px 30px;
+	border-bottom: solid 5px orange;
+	position: sticky;
+	top: 0;
+}
+.player-counter {
+	font-size: 30px;
+	margin-top: 15px;
+}
+.players-list {
+	margin: 50px 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+.player-box {
+	display: flex;
+	align-items: center;
+	padding: 0 15px;
+	height: 80px;
+	width: 40%;
+	background-color: #0000008c;
+	margin-bottom: 15px;
+	&--empty {
+		border: solid #555 1px;
+		background-color: transparent;
+	}
+	i {
+		font-size: 20px;
+		color: #ffe000;
+		margin-right: 15px;
+	}
+}

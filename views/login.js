@@ -3,11 +3,22 @@ var socket = io(window.location.origin);
 const roomCode = document.getElementById('room-code');
 const userName = document.getElementById('username');
 const errorMessage = document.getElementById('error-message');
-
+var old;
+roomCode.addEventListener('keyup', () => {
+	if (roomCode.value.length > 4) {
+		roomCode.value = old;
+	}
+	roomCode.value = roomCode.value.toUpperCase();
+});
+roomCode.addEventListener('keypress', () => {
+	if (roomCode.value.length == 4) {
+		old = roomCode.value;
+	}
+});
 createRoom = () => {
 	console.log('click create room');
 	let data = {
-		roomCode: roomCode.value,
+		roomCode: roomCode.value.toUpperCase(),
 		userName: userName.value,
 	};
 	console.log(data);

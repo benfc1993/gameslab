@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "node server/index.js",
-		"watch": "node-sass ./views/style.scss ./views/style.css -w"
+		"watch": "node-sass --recursive --watch ./views/scss/ --output ./views"
 	},
 	"author": "",
 	"license": "ISC",

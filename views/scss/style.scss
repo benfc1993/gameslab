@@ -1,0 +1,13 @@
+@import 'utils.scss';
+@import 'buttons.scss';
+@import 'login.scss';
+@import 'lobby.scss';
+
+* {
+	box-sizing: border-box;
+	font-family: 'Montserrat', sans-serif;
+}
+body {
+	margin: 0;
+	height: 100vh;
+}

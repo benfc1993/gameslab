@@ -4,21 +4,54 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
 		<link rel="stylesheet" href="style.css" type="text/css" />
 	</head>
 	<body>
-		<div class="d-flex">
-			<label for="roomcode">Room Code</label>
-			<input id="room-code" name="roomcode" />
-			<label for="username">Username</label>
-			<input id="username" name="username" />
-			<input
-				type="submit"
-				value="Create"
-				onclick="createRoom();return false;"
-			/>
-			<input type="submit" value="Join" onclick="joinRoom();return false;" />
-			<p id="error-message" class="hide"></p>
+		<div class="template template--login d-flex h-100">
+			<div class="container my-auto">
+				<p class="login-title">Ben's Games</p>
+				<div class="row">
+					<div class="login-form d-flex flex-column mx-auto">
+						<div class="form-group">
+							<label for="roomcode" class="login-form__label">Room Code</label>
+							<input
+								id="room-code"
+								class="login-form__input"
+								name="roomcode"
+								placeholder=""
+							/>
+						</div>
+						<div class="form-group">
+							<label for="username" class="login-form__label">Username</label>
+							<input
+								id="username"
+								class="login-form__input"
+								name="username"
+								placeholder=""
+							/>
+						</div>
+						<div class="btn-group d-flex">
+							<input
+								class="btn btn--create"
+								type="submit"
+								value="Create"
+								onclick="createRoom();return false;"
+							/>
+							<input
+								class="btn btn--join"
+								type="submit"
+								value="Join"
+								onclick="joinRoom();return false;"
+							/>
+						</div>
+						<p id="error-message" class="error-message hide"></p>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 		<script src="./login.js"></script>
