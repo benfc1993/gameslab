@@ -71,6 +71,21 @@ Game.updateByCode = function (data, result) {
 	);
 };
 
+Game.updateLobyByCode = function (data, result) {
+	sql.query(
+		'UPDATE games SET lobby = 1 WHERE room_code = $1',
+		[data],
+		function (err, res) {
+			if (err) {
+				console.log('update error: ', err);
+				result(err);
+			} else {
+				result(res.rows[0]);
+			}
+		}
+	);
+};
+
 Game.updateGameState = function (data, result) {
 	sql.query(
 		'UPDATE games SET state = $1 WHERE room_code = $2',

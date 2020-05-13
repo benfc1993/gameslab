@@ -126,6 +126,13 @@ function newConnection(socket) {
 			io.emit('newState', data);
 		});
 	});
+	socket.on('restartGame', (roomCode) => {
+		Games.updateLobyByCode(roomCode, (res) => {
+			if (res) {
+				io.emit('backToLobby');
+			}
+		});
+	});
 	socket.on('endGame', (roomCode) => {
 		Games.remove(roomCode, (res) => {
 			io.emit('exitGame');

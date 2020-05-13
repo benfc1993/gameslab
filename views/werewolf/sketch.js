@@ -23,6 +23,10 @@ function setup() {
 	userData = JSON.parse(localStorage.getItem('game_data'));
 	socket.emit('joinGame', userData);
 
+	socket.on('backToLobby', () => {
+		window.location.href = '/werewolf/lobby';
+	});
+
 	socket.on('exitGame', () => {
 		window.location.href = '/';
 	});
@@ -161,6 +165,12 @@ function setup() {
 					state.game.end = true;
 					this.stage = 'Game over';
 					sendState();
+					this.button = createButton('back to lobby');
+					this.button.size(150, 60);
+					this.button.position(windowWidth / 2 + width / 2 - 400, 30);
+					this.button.mouseClicked(() => {
+						socket.emit('restartGame', userData.roomCode);
+					});
 					this.button = createButton('End Game');
 					this.button.size(150, 60);
 					this.button.position(windowWidth / 2 + width / 2 - 200, 30);
